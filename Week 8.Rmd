@@ -1,0 +1,46 @@
+```{r}
+JohnsFamily <-
+  list(
+    name = "John", 
+    age = 35,
+    spouse = list(
+      name = "Mary", 
+      age = 32),
+    children = list(
+      list(
+        name = "Bill", 
+        age = 5),
+      list(
+        name = "Jane", 
+        age = 3)
+    )
+  )
+
+```
+
+
+```{r}
+# Observation by observation
+concerts_obo <-
+  jsonlite::fromJSON("https://cloud.culture.tw/frontsite/trans/SearchShowAction.do?method=doFindTypeJ&category=17", simplifyDataFrame = F)
+
+# Feature by feature
+concerts_fbf <-
+  jsonlite::fromJSON("https://cloud.culture.tw/frontsite/trans/SearchShowAction.do?method=doFindTypeJ&category=17", simplifyDataFrame = T)
+```
+
+
+
+```{r}
+#ex 3.6
+concerts_obo2 <- concerts_obo
+concerts_obo2 <- concerts_obo2[-c(2,5,7)]
+```
+
+
+```{r}
+#ex 3.7
+JohnsFamilyCopy4 <- JohnsFamily
+JohnsFamilyCopy4 <- JohnsFamilyCopy4[-c(3)]
+```
+
