@@ -1,0 +1,101 @@
+---
+title: "final project draft (team 8)"
+author: "PEIZHI HE"
+date: "12/22/2021"
+output:
+  word_document: default
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 範例議題
+
+哪類族群對歐式料理有較高的喜好度？
+
+## Load library
+
+Line22 dataset路徑麻煩同學們手動改成自己的存擋位置，謝謝。
+（為了省事所以不弄到googlesheet上）
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+dataset <- read_csv("/Users/peizhi/Documents/OneDrive/final project/dataset.csv", show_col_types = FALSE)
+```
+
+## clean data
+
+一些資料整理、重新歸類排序.
+這裡只是拋磚引玉，如果大家在資料集裡有更有梗的發現也歡迎在gitter集思廣益。
+
+### 國際議題關注度, 升序 (b10)
+
+```{r}
+b10_recode <- c('1'=7,'2'=6,'3'=5,'4'=4,'5'=3,'6'=2,'7'=1,'92'=NA,'94'=NA)
+dataset$b10_idx <- b10_recode[dataset$b10] %>% factor()
+table(dataset$b10_idx)
+```
+
+### 外語閱讀能力, 升序 (b23a)
+
+```{r}
+b23a_recode <- c('1'=7,'2'=6,'3'=5,'4'=4,'5'=3,'6'=2,'7'=1,'98'=NA)
+dataset$b23a_idx <- b23a_recode[dataset$b23a] %>% factor()
+table(dataset$b23a_idx)
+```
+
+### 歐式料理喜好度 (c3e)
+
+```{r}
+c3e_recode <- c('1'=1,'2'=1,'3'=0,'4'=0,'97'=NA)
+dataset$c3e_gc<-c3e_recode[dataset$c3e] %>% factor()
+levels(dataset$c3e_gc) <- c("dislike","like")
+table(dataset$c3e_gc)
+```
+
+
+## Figures
+
+將資料視覺化，表現對歐式料理的偏好與外語能力和國際議題關注度的趨勢（相關性）。
+（有其它表現力更好的方式也麻煩大家再給意見）
+
+```{r, warning=FALSE}
+q1p1 <- ggplot(dataset,
+               aes(x = b23a_idx,
+                   fill = c3e_gc)) +
+  geom_bar(position = position_fill(),alpha = .7) +
+  scale_x_discrete(name = 'reading ability (b23a)',
+                   breaks = seq(0, 7, 1), na.translate = FALSE)+
+  scale_fill_brewer(breaks=c("dislike","like"),
+                    labels = c("dislike","like"),
+                    palette ="Blues") +
+  theme_light()+
+  labs(y = "proportion",fill = 'taste')
+
+q1p2 <- ggplot(dataset,
+               aes(x = b10_idx,
+                   fill = c3e_gc)) +
+  geom_bar(position = position_fill(),alpha = .7) +
+  scale_x_discrete(name = 'international issues (b10)',
+                   breaks = seq(0, 7, 1), na.translate = FALSE)+
+  scale_fill_brewer(breaks=c("dislike","like"),
+                    labels = c("dislike","like"),
+                    palette ="Blues") + 
+  theme_light()+
+  labs(y = "proportion",fill = 'taste')
+
+q1p1
+q1p2
+```
+
+
+## Conclusion
+
+外語能力較好與對國外議題關注度高的民眾對歐式料理有較高偏好。
+（僅為範例，可能要多整理其它問卷選項尋找相關度高的議題豐富故事內容）
