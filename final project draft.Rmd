@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Load library
 
-Line22 dataset路徑麻煩同學們手動改成自己的存擋位置，謝謝。
+Line29 dataset路徑麻煩同學們手動改成自己的存擋位置，謝謝。
 （為了省事所以不弄到googlesheet上）
 
 ```{r}
