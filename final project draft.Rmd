@@ -19,14 +19,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Load library
 
-Line29 dataset路徑麻煩同學們手動改成自己的存擋位置，謝謝。
-（為了省事所以不弄到googlesheet上）
+dataset已照老師提示修正為指向github端檔案。
 
 ```{r}
 library(readr)
 library(dplyr)
 library(ggplot2)
-dataset <- read_csv("/Users/peizhi/Documents/OneDrive/final project/dataset.csv", show_col_types = FALSE)
+dataset <- readr::read_csv("https://github.com/PEIZHIHE/110-1-r4ds-main/blob/147f189ece0ae4ca676905d605111cf3f7fa2002/dataset.csv?raw=true", show_col_types = FALSE)
 ```
 
 ## clean data
